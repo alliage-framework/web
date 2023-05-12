@@ -1,2 +1,3 @@
-# web
-Modules adding web server capabilities to an Alliage application
+# @alliage/web
+
+Monorepo containing Alliage modules to build a web server

@@ -1,0 +1,57 @@
+0 silly argv {
+0 silly argv   _: [ 'version' ],
+0 silly argv   amend: true,
+0 silly argv   lernaVersion: '6.0.3',
+0 silly argv   '$0': 'lerna',
+0 silly argv   bump: '0.1.0-pre2'
+0 silly argv }
+1 notice cli v6.0.3
+2 verbose rootPath /Users/boris/workspace/alliage-web
+3 info current version 0.0.1
+4 silly isAnythingCommitted
+5 verbose isAnythingCommitted 1
+6 silly getCurrentBranch
+7 verbose currentBranch beta
+8 silly hasTags
+9 verbose hasTags false
+10 info Assuming all packages changed
+11 verbose updated alliage-webserver-express
+12 verbose updated alliage-webserver-sandbox
+13 verbose updated alliage-webserver
+14 warn version Skipping working tree validation, proceed at your own risk
+15 info execute Skipping git push
+16 info execute Skipping releases
+17 silly lifecycle No script for "preversion" in "root", continuing
+18 silly lifecycle No script for "preversion" in "alliage-webserver-sandbox", continuing
+19 silly lifecycle No script for "preversion" in "alliage-webserver", continuing
+20 verbose version alliage-webserver-sandbox has no lockfile. Skipping lockfile update.
+21 verbose version alliage-webserver has no lockfile. Skipping lockfile update.
+22 silly lifecycle No script for "version" in "alliage-webserver-sandbox", continuing
+23 silly lifecycle No script for "version" in "alliage-webserver", continuing
+24 silly lifecycle No script for "preversion" in "alliage-webserver-express", continuing
+25 verbose version alliage-webserver-express has no lockfile. Skipping lockfile update.
+26 silly lifecycle No script for "version" in "alliage-webserver-express", continuing
+27 verbose version Updating root package-lock.json
+28 error Error: Command failed with exit code 1: npm install --package-lock-only --ignore-scripts
+28 error npm WARN ERESOLVE overriding peer dependency
+28 error npm WARN While resolving: alliage-webserver-sandbox@0.1.0-pre2
+28 error npm WARN Found: alliage-webserver@undefined
+28 error npm WARN node_modules/alliage-webserver
+28 error npm WARN   workspace packages/webserver from the root project
+28 error npm WARN
+28 error npm WARN Could not resolve dependency:
+28 error npm WARN peer alliage-webserver@"^0.0.1" from alliage-webserver-sandbox@0.1.0-pre2
+28 error npm WARN packages/webserver-sandbox
+28 error npm WARN   alliage-webserver-sandbox@0.0.1
+28 error npm WARN   node_modules/alliage-webserver-sandbox
+28 error npm ERR! code ETARGET
+28 error npm ERR! notarget No matching version found for alliage-webserver@^0.0.1.
+28 error npm ERR! notarget In most cases you or one of your dependencies are requesting
+28 error npm ERR! notarget a package version that doesn't exist.
+28 error
+28 error npm ERR! A complete log of this run can be found in:
+28 error npm ERR!     /Users/boris/.npm/_logs/2023-05-10T12_53_19_665Z-debug-0.log
+28 error     at makeError (/Users/boris/.nvm/versions/node/v19.1.0/lib/node_modules/lerna/node_modules/execa/lib/error.js:60:11)
+28 error     at handlePromise (/Users/boris/.nvm/versions/node/v19.1.0/lib/node_modules/lerna/node_modules/execa/index.js:118:26)
+28 error     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+28 error     at async Promise.all (index 0)
