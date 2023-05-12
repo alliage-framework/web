@@ -1,6 +1,6 @@
 {
   "name": "@alliage/webserver-express",
-  "version": "0.0.0",
+  "version": "0.1.0-beta.0",
   "description": "Express adapter module for Alliage Webserver",
   "publishConfig": {
     "access": "public"
@@ -43,10 +43,10 @@
   },
   "peerDependencies": {
     "@alliage/framework": "^1.0.0-beta.2",
-    "@alliage/webserver": "^0.0.0",
+    "@alliage/webserver": "^0.1.0-beta.0",
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "@alliage/webserver": "^0.0.0"
+    "@alliage/webserver": "^0.1.0-beta.0"
   }
 }
