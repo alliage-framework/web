@@ -1,0 +1,38 @@
+{
+  "name": "@alliage/webserver-sandbox",
+  "version": "0.0.0",
+  "description": "Webserver sandbox for Alliage",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "LICENSE"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alliage-framework/web.git"
+  },
+  "author": "bo.lebon@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alliage-framework/web/issues"
+  },
+  "homepage": "https://github.com/alliage-framework/web#readme",
+  "peerDependencies": {
+    "@alliage/framework": "^1.0.0-beta.2",
+    "@alliage/sandbox": "^1.0.0-beta.1",
+    "@alliage/webserver": "^0.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "get-port": "^5.1.1"
+  }
+}
