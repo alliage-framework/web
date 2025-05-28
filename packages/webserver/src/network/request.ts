@@ -1,6 +1,6 @@
 import { Duplex, Readable } from 'stream';
 
-import { HTTP_METHOD, Params } from '.';
+import { HTTP_METHOD, Params } from './http.js';
 
 export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> {
   // Express Request
@@ -16,7 +16,7 @@ export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> 
 
   abstract getHostName(): string;
 
-  abstract getIP(): string;
+  abstract getIP(): string | undefined;
 
   abstract getIPs(): string[];
 

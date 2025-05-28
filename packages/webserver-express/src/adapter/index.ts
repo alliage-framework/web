@@ -1,5 +1,6 @@
 import http, { Server } from 'http';
 import https, { Server as SecureServer } from 'https';
+import { createRequire } from 'module';
 
 import express, {
   Express,
@@ -7,7 +8,6 @@ import express, {
   Response as NativeResponse,
   NextFunction,
 } from 'express';
-import { version as expressVersion } from 'express/package.json';
 import {
   AbstractAdapter,
   InitializeParameters,
@@ -24,10 +24,12 @@ import {
 } from '@alliage/webserver';
 import { EventManager } from '@alliage/lifecycle';
 
-import { Request } from '../network/request';
-import { Response } from '../network/response';
-import { Config } from '../config';
+import { Request } from '../network/request.js';
+import { Response } from '../network/response.js';
+import { Config } from '../config.js';
 
+const require = createRequire(import.meta.url);
+const expressVersion = require('express/package.json').version;
 export const ADAPTER_NAME = `express-${expressVersion}`;
 
 export class ExpressAdapter extends AbstractAdapter {

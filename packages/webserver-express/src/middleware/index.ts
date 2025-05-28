@@ -1,1 +1,1 @@
-export * from './native-middleware';
+export * from './native-middleware.js';

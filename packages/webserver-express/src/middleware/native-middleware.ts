@@ -1,6 +1,6 @@
 import { AbstractMiddleware, Context, REQUEST_PHASE } from '@alliage/webserver';
 
-type Func = (...args: any) => any;
+type Func = (...args: any[]) => any;
 
 interface Options<T extends Func> {
   requestPhase?: REQUEST_PHASE;
@@ -29,8 +29,8 @@ export function createNativeMiddleware<T extends Func>(
 
     constructor(...args: any[]) {
       super();
-      const middlewareArgs = argsBuilder && argsBuilder(...args);
-      this.middleware = middlewareArgs ? nativeMiddleware(...middlewareArgs) : nativeMiddleware;
+      const middlewareArgs = argsBuilder?.(...args);
+      this.middleware = (middlewareArgs ? nativeMiddleware(...middlewareArgs) : nativeMiddleware) as T;
 
       const applyMiddleware = (context: Context, err?: Error) =>
         new Promise<void>((resolve) => {

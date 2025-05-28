@@ -1,6 +1,6 @@
-import { REQUEST_PHASE } from '../adapter';
+import { REQUEST_PHASE } from '../adapter/index.js';
 
-import { Context } from './context';
+import { Context } from './context.js';
 
 export abstract class AbstractMiddleware {
   applyBefore = (): Array<typeof AbstractMiddleware> => [];
@@ -12,4 +12,4 @@ export abstract class AbstractMiddleware {
   abstract apply(context: Context, error?: Error): Promise<void> | void;
 }
 
-export * from './context';
+export * from './context.js';

@@ -1,4 +1,4 @@
-import { ServerOptions } from './adapter';
+import { ServerOptions } from './adapter/interface.js';
 
 export const CONFIG_NAME = 'webserver';
 

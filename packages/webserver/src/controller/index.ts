@@ -1,4 +1,4 @@
-import { HTTP_METHOD } from '../network';
+import { HTTP_METHOD } from '../network/index.js';
 
 export type RouteHandler = (...args: unknown[]) => Promise<unknown> | unknown;
 export type Route = [HTTP_METHOD, string, RouteHandler];
@@ -18,4 +18,4 @@ export abstract class AbstractController {
   }
 }
 
-export * from './decorations';
+export * from './decorations.js';

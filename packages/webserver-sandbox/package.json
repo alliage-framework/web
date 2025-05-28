@@ -2,6 +2,7 @@
   "name": "@alliage/webserver-sandbox",
   "version": "0.1.0-beta.0",
   "description": "Webserver sandbox for Alliage",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -27,12 +28,12 @@
   },
   "homepage": "https://github.com/alliage-framework/web#readme",
   "peerDependencies": {
-    "@alliage/framework": "^1.0.0-beta.2",
+    "@alliage/framework": "^1.0.0-beta.3",
     "@alliage/sandbox": "^1.0.0-beta.1",
     "@alliage/webserver": "^0.1.0-beta.0"
   },
   "dependencies": {
-    "axios": "^0.21.0",
-    "get-port": "^5.1.1"
+    "axios": "^1.9.0",
+    "get-port": "^7.1.0"
   }
 }

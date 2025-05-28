@@ -1,6 +1,6 @@
-import { HTTP_METHOD } from '../network';
+import { HTTP_METHOD } from '../network/index.js';
 
-import { AbstractController } from '.';
+import { AbstractController } from './index.js';
 
 const createRouteAnnotation = (method: HTTP_METHOD) => (path: string) => (
   controller: AbstractController,

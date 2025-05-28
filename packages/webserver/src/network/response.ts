@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Writable, Duplex } from 'stream';
 
-import { ParamsValue } from '.';
+import { ParamsValue } from './http.js';
 
 interface CookieOptions {
   domain?: string;

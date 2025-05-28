@@ -92,7 +92,7 @@ export class Response<B = string | Buffer | object> extends AbstractResponse<B, 
   }
 
   redirect(url: string, code: number = 301) {
-    this.nativeResponse.redirect(url, code);
+    this.nativeResponse.redirect(code, url);
     return this;
   }
 

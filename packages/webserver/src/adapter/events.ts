@@ -4,11 +4,11 @@ import https from 'https';
 
 import { AbstractEvent, AbstractWritableEvent } from '@alliage/lifecycle';
 
-import { AbstractRequest } from '../network/request';
-import { AbstractResponse } from '../network/response';
-import { AbstractController, RouteHandler } from '../controller';
+import { AbstractRequest } from '../network/request.js';
+import { AbstractResponse } from '../network/response.js';
+import { AbstractController, RouteHandler } from '../controller/index.js';
 
-import { ServerOptions } from '.';
+import { ServerOptions } from './interface.js';
 
 export enum ADAPTER_EVENTS {
   PRE_REQUEST = '@webserver/ADAPTER_EVENTS/PRE_REQUEST',
@@ -78,7 +78,7 @@ interface AdapterPreControllerEventPayload {
   handler: RouteHandler;
   request: AbstractRequest;
   response: AbstractResponse;
-  arguments: any[];
+  arguments: unknown[];
   adapter: string;
 }
 
@@ -91,7 +91,7 @@ export class AdapterPreControllerEvent extends AbstractWritableEvent<
     handler: RouteHandler,
     request: AbstractRequest,
     response: AbstractResponse,
-    args: any[],
+    args: unknown[],
     adapter: string,
   ) {
     super(ADAPTER_EVENTS.PRE_CONTROLLER, {
@@ -128,7 +128,7 @@ export class AdapterPreControllerEvent extends AbstractWritableEvent<
     return this.getPayload().adapter;
   }
 
-  setArguments(args: any[]) {
+  setArguments(args: unknown[]) {
     this.getWritablePayload().arguments = args;
     return this;
   }
@@ -139,7 +139,7 @@ interface AdapterPostControllerEventPayload {
   handler: RouteHandler;
   request: AbstractRequest;
   response: AbstractResponse;
-  returnedValue: any;
+  returnedValue: unknown;
   adapter: string;
 }
 
@@ -152,7 +152,7 @@ export class AdapterPostControllerEvent extends AbstractEvent<
     handler: RouteHandler,
     request: AbstractRequest,
     response: AbstractResponse,
-    returnedValue: any,
+    returnedValue: unknown,
     adapter: string,
   ) {
     super(ADAPTER_EVENTS.POST_CONTROLLER, {
