@@ -80,8 +80,8 @@ export class ExpressAdapter extends AbstractAdapter {
     controllers.forEach((controller: AbstractController) => {
       const routes = controller.getRoutes();
       routes.forEach(([method, path, handler]) => {
-        const verb = method.toLowerCase();
-        (this.app as any)[verb](
+        const verb = method.toLowerCase() as keyof Express;
+        this.app[verb](
           path,
           async (req: NativeRequest, res: NativeResponse, next: NextFunction) => {
             const request = this.getRequest(req);
@@ -167,7 +167,7 @@ export class ExpressAdapter extends AbstractAdapter {
     const server = this.getNativeServer();
     return new Promise<void>((resolve, reject) => {
       server.on('error', (error) => reject(error));
-      server.listen(port, host as any, async () => {
+      server.listen(port, host, async () => {
         resolve();
       });
     });

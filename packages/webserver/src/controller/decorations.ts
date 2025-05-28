@@ -6,6 +6,7 @@ const createRouteAnnotation = (method: HTTP_METHOD) => (path: string) => (
   controller: AbstractController,
   handlerName: string,
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   controller.addRoute(method, path, (controller as any)[handlerName]);
 };
 

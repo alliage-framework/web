@@ -14,7 +14,7 @@ export default class WebserverExpressModule extends AbstractLifeCycleAwareModule
 
   registerServices(serviceContainer: ServiceContainer) {
     serviceContainer.registerService('webserver-express-adapter', ExpressAdapter, [
-      parameter((parameters: any) => parameters[CONFIG_NAME]),
+      parameter(CONFIG_NAME),
       instanceOf(EventManager),
     ]);
   }

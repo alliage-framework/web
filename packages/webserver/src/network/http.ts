@@ -10,6 +10,6 @@ export enum HTTP_METHOD {
   TRACE = 'TRACE',
 }
 
-// eslint-disable-next-line no-use-before-define
+ 
 export type ParamsValue = string | string[] | Params | Params[];
 export type Params = { [key: string]: ParamsValue };

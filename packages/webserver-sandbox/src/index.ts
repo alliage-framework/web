@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file */
+ 
 import { CommandOptions, Sandbox } from '@alliage/sandbox';
 import getPort from 'get-port';
 import axios, { AxiosInstance } from 'axios';

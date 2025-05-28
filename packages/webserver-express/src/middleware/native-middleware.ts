@@ -1,11 +1,13 @@
 import { AbstractMiddleware, Context, REQUEST_PHASE } from '@alliage/webserver';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Func = (...args: any[]) => any;
 
 interface Options<T extends Func> {
   requestPhase?: REQUEST_PHASE;
   applyBefore?: Array<typeof AbstractMiddleware>;
   applyAfter?: Array<typeof AbstractMiddleware>;
+   
   args?: (...args: any[]) => [...Parameters<T>] | undefined;
 }
 
@@ -27,6 +29,7 @@ export function createNativeMiddleware<T extends Func>(
 
     getRequestPhase = () => requestPhase;
 
+     
     constructor(...args: any[]) {
       super();
       const middlewareArgs = argsBuilder?.(...args);
@@ -50,7 +53,7 @@ export function createNativeMiddleware<T extends Func>(
     }
 
     /* istanbul ignore next */
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+     
     async apply(_context: Context, _err?: Error) {}
   };
 }

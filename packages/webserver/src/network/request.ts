@@ -2,6 +2,8 @@ import { Duplex, Readable } from 'stream';
 
 import { HTTP_METHOD, Params } from './http.js';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> {
   // Express Request
   abstract getBaseUrl(): string;
@@ -75,12 +77,15 @@ export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> 
 
   abstract getTrailers(): NodeJS.Dict<string>;
 
+   
   abstract onClose(callback: () => any): this;
 
+   
   abstract onAborted(callback: () => any): this;
 
   abstract getReadableStream(): Readable;
 
+   
   abstract getExtraPayload<T = any>(name: string): T;
 
   abstract setExtraPayload<T>(name: string, value: T): this;

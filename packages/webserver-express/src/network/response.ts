@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Response as NativeResponse, CookieOptions } from 'express';
 import { ParamsValue, AbstractResponse, BodyAlreadySetError } from '@alliage/webserver';
 
@@ -11,14 +12,14 @@ export class Response<B = string | Buffer | object> extends AbstractResponse<B, 
   constructor(private nativeResponse: NativeResponse) {
     super();
     const originalStatus = nativeResponse.status;
-    // eslint-disable-next-line no-param-reassign
+     
     nativeResponse.status = (code: number) => {
       this.status = code;
       return originalStatus.call(nativeResponse, code);
     };
 
     const originalRedirect = nativeResponse.redirect;
-    // eslint-disable-next-line no-param-reassign
+     
     nativeResponse.redirect = (arg1: any, arg2?: any) => {
       const result = originalRedirect.call(nativeResponse, arg1, arg2);
       if (typeof arg1 === 'number') {
@@ -32,7 +33,7 @@ export class Response<B = string | Buffer | object> extends AbstractResponse<B, 
     };
 
     const originalWriteHeaders = nativeResponse.writeHead;
-    // eslint-disable-next-line no-param-reassign
+     
     nativeResponse.writeHead = (code: number, ...args: any[]) => {
       this.status = code;
       return originalWriteHeaders.call(nativeResponse, code, ...args);
