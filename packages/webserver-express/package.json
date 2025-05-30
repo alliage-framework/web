@@ -2,6 +2,7 @@
   "name": "@alliage/webserver-express",
   "version": "0.1.0-beta.0",
   "description": "Express adapter module for Alliage Webserver",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -19,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alliage-framework/web.git"
+    "url": "https://github.com/alliage-framework/web.git"
   },
   "author": "bo.lebon@gmail.com",
   "license": "ISC",
@@ -42,11 +43,14 @@
     }
   },
   "peerDependencies": {
-    "@alliage/framework": "^1.0.0-beta.2",
+    "@alliage/framework": "^1.0.0-beta.3",
     "@alliage/webserver": "^0.1.0-beta.0",
-    "express": "^4.18.2"
+    "express": "^5.1.0"
   },
   "devDependencies": {
     "@alliage/webserver": "^0.1.0-beta.0"
+  },
+  "dependencies": {
+    "json-schema-to-ts": "^3.1.1"
   }
 }

@@ -2,8 +2,8 @@ import { CONFIG_EVENTS, loadConfig, validators } from '@alliage/config-loader';
 import { instanceOf, parameter, ServiceContainer } from '@alliage/di';
 import { EventManager, AbstractLifeCycleAwareModule } from '@alliage/lifecycle';
 
-import { ExpressAdapter } from './adapter';
-import { CONFIG_NAME, schema } from './config';
+import { ExpressAdapter } from './adapter/index.js';
+import { CONFIG_NAME, schema } from './config.js';
 
 export default class WebserverExpressModule extends AbstractLifeCycleAwareModule {
   getEventHandlers() {
@@ -14,13 +14,13 @@ export default class WebserverExpressModule extends AbstractLifeCycleAwareModule
 
   registerServices(serviceContainer: ServiceContainer) {
     serviceContainer.registerService('webserver-express-adapter', ExpressAdapter, [
-      parameter((parameters: any) => parameters[CONFIG_NAME]),
+      parameter(CONFIG_NAME),
       instanceOf(EventManager),
     ]);
   }
 }
 
-export * from './config';
-export * from './adapter';
-export * from './middleware';
-export * from './network';
+export * from './config.js';
+export * from './adapter/index.js';
+export * from './middleware/index.js';
+export * from './network/index.js';

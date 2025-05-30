@@ -1,5 +1,2 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-lerna exec -- bash "\$LERNA_ROOT_PATH/scripts/update-deps.sh"
+nx run-many --target=update-deps --all --parallel
 git add .

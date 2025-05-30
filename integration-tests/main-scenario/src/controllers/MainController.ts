@@ -37,7 +37,7 @@ export default class MainController extends AbstractController {
   }
 
   @Post('/test-post')
-  testPost(request: AbstractRequest<PostBody>, response: AbstractResponse) {
+  testPost(request: AbstractRequest<unknown, unknown, PostBody>, response: AbstractResponse) {
     const { param1, param2 } = request.getBody();
     response.setBody({
       message: `${param1} ${param2}`,

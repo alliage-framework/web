@@ -2,6 +2,7 @@
   "name": "@alliage/webserver",
   "version": "0.1.0-beta.0",
   "description": "Webserver module for Alliage",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -19,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alliage-framework/web.git"
+    "url": "https://github.com/alliage-framework/web.git"
   },
   "author": "bo.lebon@gmail.com",
   "license": "ISC",
@@ -44,9 +45,12 @@
     }
   },
   "peerDependencies": {
-    "@alliage/config-loader": "^0.1.0-beta.1",
-    "@alliage/framework": "^1.0.0-beta.2",
-    "@alliage/module-installer": "^0.1.0-beta.1",
-    "@alliage/process-manager": "^0.1.0-beta.1"
+    "@alliage/config-loader": "^0.1.0-beta.6",
+    "@alliage/framework": "^1.0.0-beta.3",
+    "@alliage/module-installer": "^0.1.0-beta.6",
+    "@alliage/process-manager": "^0.1.0-beta.6"
+  },
+  "dependencies": {
+    "json-schema-to-ts": "^3.1.1"
   }
 }

@@ -1,23 +1,23 @@
-import { ServerOptions } from './adapter';
+import { asConst, FromSchema } from 'json-schema-to-ts';
 
 export const CONFIG_NAME = 'webserver';
 
-export const schema = {
-  anyOf: [
+export const schema = asConst({
+  allOf: [
     {
-      allOf: [
-        {
-          properties: {
-            host: {
-              type: 'string',
-            },
-            port: {
-              type: 'number',
-            },
-          },
-          required: ['port'],
-          type: 'object',
+      properties: {
+        host: {
+          type: 'string',
         },
+        port: {
+          type: 'number',
+        },
+      },
+      required: ['port'],
+      type: 'object',
+    },
+    {
+      anyOf: [
         {
           properties: {
             certificate: {
@@ -34,22 +34,6 @@ export const schema = {
           required: ['certificate', 'isSecured', 'privateKey'],
           type: 'object',
         },
-      ],
-    },
-    {
-      allOf: [
-        {
-          properties: {
-            host: {
-              type: 'string',
-            },
-            port: {
-              type: 'number',
-            },
-          },
-          required: ['port'],
-          type: 'object',
-        },
         {
           properties: {
             isSecured: {
@@ -57,11 +41,10 @@ export const schema = {
               type: 'boolean',
             },
           },
-          type: 'object',
-        },
-      ],
-    },
+        }
+      ]
+    }
   ],
-};
+});
 
-export type Config = ServerOptions;
+export type Config = FromSchema<typeof schema>;

@@ -1,6 +1,8 @@
+import { asConst, FromSchema } from 'json-schema-to-ts';
+
 export const CONFIG_NAME = 'webserver-express';
 
-export const schema = {
+export const schema = asConst({
   properties: {
     settings: {
       additionalProperties: {},
@@ -9,10 +11,6 @@ export const schema = {
   },
   required: ['settings'],
   type: 'object',
-};
+});
 
-export interface Config {
-  settings: {
-    [key: string]: any;
-  };
-}
+export type Config = FromSchema<typeof schema>;

@@ -7,10 +7,10 @@ import {
   AdapterServerStartedEvent,
   AdapterServerStoppedEvent,
   AbstractAdapter,
-} from '../adapter';
-import { Config } from '../config';
-import { AbstractController } from '../controller';
-import { AbstractMiddleware } from '../middleware';
+} from '../adapter/index.js';
+import { Config } from '../config.js';
+import { AbstractController } from '../controller/index.js';
+import { AbstractMiddleware } from '../middleware/index.js';
 
 export class WebProcess extends AbstractProcess {
   constructor(

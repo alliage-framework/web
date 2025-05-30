@@ -1,4 +1,5 @@
-import { BodyAlreadySetError } from '../response';
+import { describe, it, expect } from 'vitest';
+import { BodyAlreadySetError } from '../response.js';
 
 describe('webserver/network/response', () => {
   describe('BodyAlreadySetError', () => {

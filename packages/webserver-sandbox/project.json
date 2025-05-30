@@ -1,0 +1,9 @@
+{
+  "name": "@alliage/webserver-sandbox",
+  "targets": {
+    "build": {},
+    "clean": {},
+    "update-manifest": {},
+    "update-deps": {}
+  }
+}

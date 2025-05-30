@@ -1,42 +1,43 @@
 import { Socket } from 'net';
 
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { Response as NativeResponse } from 'express';
 import { BodyAlreadySetError } from '@alliage/webserver';
 
-import { Response } from '../response';
+import { Response } from '../response.js';
 
 describe('webserver-express/http/response', () => {
   describe('Response', () => {
-    const redirectMock = jest.fn();
-    const statusMock = jest.fn();
-    const writeHeadMock = jest.fn();
+    const redirectMock = vi.fn();
+    const statusMock = vi.fn();
+    const writeHeadMock = vi.fn();
     const dummySocket = new Socket();
     const dummyResponse = {
       headersSent: true,
-      append: jest.fn(),
-      attachment: jest.fn(),
-      cookie: jest.fn(),
-      clearCookie: jest.fn(),
-      send: jest.fn(),
-      end: jest.fn(),
-      format: jest.fn(),
-      getHeader: jest.fn(),
-      setHeader: jest.fn(),
-      removeHeader: jest.fn(),
+      append: vi.fn(),
+      attachment: vi.fn(),
+      cookie: vi.fn(),
+      clearCookie: vi.fn(),
+      send: vi.fn(),
+      end: vi.fn(),
+      format: vi.fn(),
+      getHeader: vi.fn(),
+      setHeader: vi.fn(),
+      removeHeader: vi.fn(),
       redirect: redirectMock,
       status: statusMock,
-      on: jest.fn(),
+      on: vi.fn(),
       writableEnded: false,
-      addTrailers: jest.fn(),
+      addTrailers: vi.fn(),
       writeHead: writeHeadMock,
-      flushHeaders: jest.fn(),
+      flushHeaders: vi.fn(),
       socket: dummySocket,
     };
 
     const response = new Response((dummyResponse as unknown) as NativeResponse);
     let onCloseCallback: Function;
     afterEach(() => {
-      jest.resetAllMocks();
+      vi.resetAllMocks();
     });
 
     describe('#constructor', () => {
@@ -121,14 +122,14 @@ describe('webserver-express/http/response', () => {
       it('should allow to redirect', () => {
         response.redirect('/new/path');
 
-        expect(redirectMock).toHaveBeenCalledWith('/new/path', 301);
+        expect(redirectMock).toHaveBeenCalledWith(301, '/new/path');
         expect(response.getStatus()).toEqual(301);
       });
 
       it('should allow to define a specific code', () => {
         response.redirect('/new/path', 302);
 
-        expect(redirectMock).toHaveBeenCalledWith('/new/path', 302);
+        expect(redirectMock).toHaveBeenCalledWith(302, '/new/path');
         expect(response.getStatus()).toEqual(302);
       });
     });
@@ -248,7 +249,7 @@ describe('webserver-express/http/response', () => {
         response.getNativeResponse().redirect(302, 'path');
         expect(response.getStatus()).toEqual(302);
 
-        response.getNativeResponse().redirect('path', 301);
+        response.getNativeResponse().redirect(301, 'path');
         expect(response.getStatus()).toEqual(301);
 
         response.getNativeResponse().redirect('path');

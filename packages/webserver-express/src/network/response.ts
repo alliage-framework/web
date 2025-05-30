@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Response as NativeResponse, CookieOptions } from 'express';
 import { ParamsValue, AbstractResponse, BodyAlreadySetError } from '@alliage/webserver';
 
@@ -11,28 +12,22 @@ export class Response<B = string | Buffer | object> extends AbstractResponse<B, 
   constructor(private nativeResponse: NativeResponse) {
     super();
     const originalStatus = nativeResponse.status;
-    // eslint-disable-next-line no-param-reassign
+
     nativeResponse.status = (code: number) => {
       this.status = code;
       return originalStatus.call(nativeResponse, code);
     };
 
     const originalRedirect = nativeResponse.redirect;
-    // eslint-disable-next-line no-param-reassign
-    nativeResponse.redirect = (arg1: any, arg2?: any) => {
-      const result = originalRedirect.call(nativeResponse, arg1, arg2);
-      if (typeof arg1 === 'number') {
-        this.status = arg1;
-      } else if (typeof arg2 === 'number') {
-        this.status = arg2;
-      } else {
-        this.status = 302;
-      }
+
+    nativeResponse.redirect = (arg1: string | number, arg2?: string) => {
+      const result = originalRedirect.call(nativeResponse, arg1 as number, arg2 as string);
+      this.status = typeof arg1 === 'number' ? arg1 : 302;
       return result;
     };
 
     const originalWriteHeaders = nativeResponse.writeHead;
-    // eslint-disable-next-line no-param-reassign
+
     nativeResponse.writeHead = (code: number, ...args: any[]) => {
       this.status = code;
       return originalWriteHeaders.call(nativeResponse, code, ...args);
@@ -92,7 +87,7 @@ export class Response<B = string | Buffer | object> extends AbstractResponse<B, 
   }
 
   redirect(url: string, code: number = 301) {
-    this.nativeResponse.redirect(url, code);
+    this.nativeResponse.redirect(code, url);
     return this;
   }
 

@@ -1,5 +1,5 @@
-import { AbstractRequest } from '../network/request';
-import { AbstractResponse } from '../network/response';
+import { AbstractRequest } from '../network/request.js';
+import { AbstractResponse } from '../network/response.js';
 
 export class Context {
   constructor(

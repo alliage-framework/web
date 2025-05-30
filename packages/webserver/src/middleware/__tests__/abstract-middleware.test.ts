@@ -1,5 +1,6 @@
-import { AbstractMiddleware } from '..';
-import { REQUEST_PHASE } from '../../adapter';
+import { describe, it, expect } from 'vitest';
+import { AbstractMiddleware } from '../index.js';
+import { REQUEST_PHASE } from '../../adapter/index.js';
 
 describe('webserver/middleware', () => {
   describe('AbstractMiddleware', () => {

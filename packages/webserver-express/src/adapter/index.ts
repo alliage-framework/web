@@ -1,5 +1,6 @@
 import http, { Server } from 'http';
 import https, { Server as SecureServer } from 'https';
+import { createRequire } from 'module';
 
 import express, {
   Express,
@@ -7,7 +8,6 @@ import express, {
   Response as NativeResponse,
   NextFunction,
 } from 'express';
-import { version as expressVersion } from 'express/package.json';
 import {
   AbstractAdapter,
   InitializeParameters,
@@ -24,10 +24,12 @@ import {
 } from '@alliage/webserver';
 import { EventManager } from '@alliage/lifecycle';
 
-import { Request } from '../network/request';
-import { Response } from '../network/response';
-import { Config } from '../config';
+import { Request } from '../network/request.js';
+import { Response } from '../network/response.js';
+import { Config } from '../config.js';
 
+const require = createRequire(import.meta.url);
+const expressVersion = require('express/package.json').version;
 export const ADAPTER_NAME = `express-${expressVersion}`;
 
 export class ExpressAdapter extends AbstractAdapter {
@@ -78,8 +80,8 @@ export class ExpressAdapter extends AbstractAdapter {
     controllers.forEach((controller: AbstractController) => {
       const routes = controller.getRoutes();
       routes.forEach(([method, path, handler]) => {
-        const verb = method.toLowerCase();
-        (this.app as any)[verb](
+        const verb = method.toLowerCase() as keyof Express;
+        this.app[verb](
           path,
           async (req: NativeRequest, res: NativeResponse, next: NextFunction) => {
             const request = this.getRequest(req);
@@ -165,7 +167,7 @@ export class ExpressAdapter extends AbstractAdapter {
     const server = this.getNativeServer();
     return new Promise<void>((resolve, reject) => {
       server.on('error', (error) => reject(error));
-      server.listen(port, host as any, async () => {
+      server.listen(port, host, async () => {
         resolve();
       });
     });

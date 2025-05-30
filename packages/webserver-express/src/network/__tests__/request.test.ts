@@ -1,9 +1,10 @@
 import { Socket } from 'net';
 
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Request as NativeRequest } from 'express';
 import { HTTP_METHOD } from '@alliage/webserver';
 
-import { Request } from '../request';
+import { Request } from '../request.js';
 
 describe('webserver-express/http/request', () => {
   describe('Request', () => {
@@ -33,28 +34,28 @@ describe('webserver-express/http/request', () => {
       stale: false,
       subdomains: ['DUMMY_SUBDOMAIN1', 'DUMMY_SUBDOMAIN2'],
       xhr: true,
-      accepts: jest.fn(),
-      acceptsCharsets: jest.fn(),
-      acceptsEncodings: jest.fn(),
-      acceptsLanguages: jest.fn(),
-      header: jest.fn(),
-      is: jest.fn(),
+      accepts: vi.fn(),
+      acceptsCharsets: vi.fn(),
+      acceptsEncodings: vi.fn(),
+      acceptsLanguages: vi.fn(),
+      header: vi.fn(),
+      is: vi.fn(),
       aborted: false,
       complete: true,
-      destroy: jest.fn(),
+      destroy: vi.fn(),
       httpVersion: 'DUMMY_HTTP_VERSION',
       socket: dummySocket,
       trailers: {
         DUMMY_TRAILER1: 'DUMMY_TRAILER_VALUE1',
         DUMMY_TRAILER2: 'DUMMY_TRAILER_VALUE2',
       },
-      on: jest.fn(),
+      on: vi.fn(),
       dummyExtraProperty: 'DUMMY_EXTRA_PROPERTY_VALUE',
     };
     const request = new Request((dummyRequest as unknown) as NativeRequest);
 
     beforeEach(() => {
-      jest.resetAllMocks();
+      vi.resetAllMocks();
     });
 
     describe('#getBaseUrl', () => {

@@ -1,6 +1,7 @@
-import { AbstractController } from '..';
-import { HTTP_METHOD } from '../../network';
-import { Connect, Delete, Get, Head, Options, Post, Put, Trace } from '../decorations';
+import { describe, it, expect } from 'vitest';
+import { AbstractController } from '../index.js';
+import { HTTP_METHOD } from '../../network/index.js';
+import { Connect, Delete, Get, Head, Options, Post, Put, Trace } from '../decorations.js';
 
 describe('webserver/controller/decorations', () => {
   class DummyController extends AbstractController {

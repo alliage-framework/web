@@ -1,12 +1,15 @@
 /* eslint-disable max-classes-per-file */
-import http from 'http';
-import https from 'https';
+import * as http from 'http';
+import * as https from 'https';
+import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
 
 import getPort from 'get-port';
-import bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
 import axios, { AxiosError } from 'axios';
 import { EventManager } from '@alliage/lifecycle';
-import { version as EXPRESS_VERSION } from 'express/package.json';
+
+const EXPRESS_VERSION = require('express/package.json').version;
+
 import {
   AbstractController,
   Delete,
@@ -27,10 +30,10 @@ import {
   AbstractResponse,
 } from '@alliage/webserver';
 
-import { ADAPTER_NAME, ExpressAdapter } from '..';
-import { Request } from '../../network/request';
-import { Response } from '../../network/response';
-import { createNativeMiddleware } from '../../middleware/native-middleware';
+import { ADAPTER_NAME, ExpressAdapter } from '../index.js';
+import { Request } from '../../network/request.js';
+import { Response } from '../../network/response.js';
+import { createNativeMiddleware } from '../../middleware/native-middleware.js';
 
 class Controller1 extends AbstractController {
   @Get('/controller1/get/:param')
@@ -115,11 +118,11 @@ describe('webserver/adapter', () => {
   describe('ExpressAdapter', () => {
     const eventManager = new EventManager();
 
-    const preRequestEventHandler = jest.fn();
-    const postRequestEventHandler = jest.fn();
-    const notFoundEventHandler = jest.fn();
-    const preControllerEventHandler = jest.fn();
-    const postControllerEventHandler = jest.fn();
+    const preRequestEventHandler = vi.fn();
+    const postRequestEventHandler = vi.fn();
+    const notFoundEventHandler = vi.fn();
+    const preControllerEventHandler = vi.fn();
+    const postControllerEventHandler = vi.fn();
 
     eventManager.on(ADAPTER_EVENTS.PRE_CONTROLLER, preRequestEventHandler);
     eventManager.on(ADAPTER_EVENTS.POST_CONTROLLER, postRequestEventHandler);
@@ -162,7 +165,7 @@ describe('webserver/adapter', () => {
     });
 
     beforeEach(() => {
-      jest.resetAllMocks();
+      vi.resetAllMocks();
     });
 
     describe('unsecured server', () => {
@@ -295,7 +298,7 @@ describe('webserver/adapter', () => {
           const errorAtStartAdapter = createAdapter({ port });
 
           const server = errorAtStartAdapter.getNativeServer();
-          jest.spyOn(server, 'listen').mockImplementation(() => server);
+          vi.spyOn(server, 'listen').mockImplementation(() => server);
 
           setTimeout(() => server.emit('error', new Error('START_ERROR')), 0);
           let error: Error | undefined;
@@ -330,7 +333,7 @@ describe('webserver/adapter', () => {
           const server: http.Server = adapter.getNativeServer();
 
           const error = new Error('close error');
-          jest.spyOn(server, 'close').mockImplementation((callback: any) => callback(error));
+          vi.spyOn(server, 'close').mockImplementation((callback: any) => callback(error));
 
           let thrownError: Error;
           try {
@@ -341,7 +344,7 @@ describe('webserver/adapter', () => {
 
           expect(thrownError!).toBeInstanceOf(Error);
           expect(thrownError!.message).toEqual('close error');
-          jest.restoreAllMocks();
+          vi.restoreAllMocks();
           server.close();
         });
 
