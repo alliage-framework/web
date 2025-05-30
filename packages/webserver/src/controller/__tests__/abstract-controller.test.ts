@@ -1,7 +1,8 @@
-import { AbstractController } from '..';
-import { HTTP_METHOD } from '../../network';
+import { describe, it, expect } from 'vitest';
+import { AbstractController } from '../index.js';
+import { HTTP_METHOD } from '../../network/index.js';
 
-describe('webserver/controller', () => {
+describe('webserver/controller/abstract-controller', () => {
   describe('AbstractController', () => {
     class DummyController extends AbstractController {}
     const controller = new DummyController();

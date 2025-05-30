@@ -1,6 +1,6 @@
 {
-  "command": "ts-node -P <projectRoot>/tsconfig.json",
-  "copyFiles": ["<scenarioRoot>/src", "<scenarioRoot>/config"],
+  "command": "tsx",
+  "copyFiles": ["<scenarioRoot>/src", "<scenarioRoot>/config", "<scenarioRoot>/package.json"],
   "linkModules": {
     "@alliage/webserver": "<projectRoot>/packages/webserver",
     "@alliage/webserver-express": "<projectRoot>/packages/webserver-express"

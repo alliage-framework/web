@@ -1,18 +1,20 @@
+import { describe, it, expect, vi } from 'vitest';
 import { DEPENDENCY, instanceOf, ParameterDependency, ServiceContainer } from '@alliage/di';
 import { validators, loadConfig, CONFIG_EVENTS } from '@alliage/config-loader';
 import { EventManager } from '@alliage/lifecycle';
 
-import { schema, CONFIG_NAME } from '../config';
-import WebserverExpressModule from '..';
-import { ExpressAdapter } from '../adapter';
+import { schema, CONFIG_NAME } from '../config.js';
+import WebserverExpressModule from '../index.js';
+import { ExpressAdapter } from '../adapter/index.js';
 
-jest.mock('@alliage/config-loader', () => {
+vi.mock('@alliage/config-loader', async () => {
+  const actual = await vi.importActual('@alliage/config-loader');
   return {
-    ...(jest.requireActual('@alliage/config-loader') as any),
+    ...actual,
     validators: {
-      jsonSchema: jest.fn(),
+      jsonSchema: vi.fn(),
     },
-    loadConfig: jest.fn(),
+    loadConfig: vi.fn(),
   };
 });
 
@@ -24,8 +26,8 @@ describe('webserver-express', () => {
       it('should listen to CONFIG_EVENTS.LOAD events', () => {
         const validateMockReturnValue = () => undefined;
         const loadConfigMockReturnValue = () => undefined;
-        (validators.jsonSchema as jest.Mock).mockReturnValueOnce(validateMockReturnValue);
-        (loadConfig as jest.Mock).mockReturnValueOnce(loadConfigMockReturnValue);
+        vi.mocked(validators.jsonSchema).mockReturnValueOnce(validateMockReturnValue);
+        vi.mocked(loadConfig).mockReturnValueOnce(loadConfigMockReturnValue);
 
         expect(module.getEventHandlers()).toEqual({
           [CONFIG_EVENTS.LOAD]: loadConfigMockReturnValue,
@@ -39,7 +41,7 @@ describe('webserver-express', () => {
     describe('#registerServices', () => {
       it('should register the web process', () => {
         const serviceContainer = new ServiceContainer();
-        const registerServiceSpy = jest.spyOn(serviceContainer, 'registerService');
+        const registerServiceSpy = vi.spyOn(serviceContainer, 'registerService');
 
         module.registerServices(serviceContainer);
 

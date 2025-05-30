@@ -1,3 +1,4 @@
+import { describe, it, expect, vi, type MockedFunction } from 'vitest';
 import { ServiceContainer, allInstancesOf, Constructor, instanceOf, parameter } from '@alliage/di';
 import { validators, loadConfig, CONFIG_EVENTS } from '@alliage/config-loader';
 import { EventManager } from '@alliage/lifecycle';
@@ -9,18 +10,18 @@ import { AbstractMiddleware } from '../middleware';
 import { WebProcess } from '../process';
 import WebserverModule from '..';
 
-jest.mock('@alliage/config-loader', () => {
+vi.mock('@alliage/config-loader', async () => {
   return {
-    ...(jest.requireActual('@alliage/config-loader') as any),
+    ...(await vi.importActual('@alliage/config-loader')),
     validators: {
-      jsonSchema: jest.fn(),
+      jsonSchema: vi.fn(),
     },
-    loadConfig: jest.fn(),
+    loadConfig: vi.fn(),
   };
 });
-jest.mock('@alliage/di', () => {
+vi.mock('@alliage/di', async () => {
   return {
-    ...(jest.requireActual('@alliage/di') as any),
+    ...(await vi.importActual('@alliage/di')),
     parameter: (path: string) => ({ type: 'DEPENDENCY/PARAMETER', path }),
   };
 });
@@ -33,8 +34,8 @@ describe('webserver', () => {
       it('should listen to CONFIG_EVENTS.LOAD events', () => {
         const validateMockReturnValue = () => undefined;
         const loadConfigMockReturnValue = () => undefined;
-        (validators.jsonSchema as jest.Mock).mockReturnValueOnce(validateMockReturnValue);
-        (loadConfig as jest.Mock).mockReturnValueOnce(loadConfigMockReturnValue);
+        (validators.jsonSchema as MockedFunction<typeof validators.jsonSchema>).mockReturnValueOnce(validateMockReturnValue);
+        (loadConfig as MockedFunction<typeof loadConfig>).mockReturnValueOnce(loadConfigMockReturnValue);
 
         expect(module.getEventHandlers()).toEqual({
           [CONFIG_EVENTS.LOAD]: loadConfigMockReturnValue,
@@ -48,7 +49,7 @@ describe('webserver', () => {
     describe('#registerServices', () => {
       it('should register the web process', () => {
         const serviceContainer = new ServiceContainer();
-        const registerServiceSpy = jest.spyOn(serviceContainer, 'registerService');
+        const registerServiceSpy = vi.spyOn(serviceContainer, 'registerService');
 
         module.registerServices(serviceContainer);
 

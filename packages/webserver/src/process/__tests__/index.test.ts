@@ -1,5 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
-import http from 'http';
+import * as http from 'http';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 
 import { Arguments, CommandBuilder } from '@alliage/framework';
 import { EventManager } from '@alliage/lifecycle';
@@ -10,25 +11,25 @@ import {
   ADAPTER_EVENTS,
 } from '@alliage/webserver';
 
-import { WebProcess } from '..';
-import { AbstractAdapter, REQUEST_PHASE } from '../../adapter';
-import { AbstractController } from '../../controller';
-import { AbstractMiddleware } from '../../middleware';
+import { WebProcess } from '../index.js';
+import { AbstractAdapter, REQUEST_PHASE } from '../../adapter/index.js';
+import { AbstractController } from '../../controller/index.js';
+import { AbstractMiddleware } from '../../middleware/index.js';
 
 class DummyAdapter extends AbstractAdapter {
   getName = () => 'dummy_adapter';
 
-  initialize = jest.fn().mockReturnThis();
+  initialize = vi.fn().mockReturnThis();
 
-  setMiddlewares = jest.fn().mockReturnThis();
+  setMiddlewares = vi.fn().mockReturnThis();
 
-  setControllers = jest.fn().mockReturnThis();
+  setControllers = vi.fn().mockReturnThis();
 
-  getNativeServer = jest.fn().mockReturnValue(http.createServer());
+  getNativeServer = vi.fn().mockReturnValue(http.createServer());
 
-  start = jest.fn().mockResolvedValue(undefined);
+  start = vi.fn().mockResolvedValue(undefined);
 
-  stop = jest.fn().mockResolvedValue(undefined);
+  stop = vi.fn().mockResolvedValue(undefined);
 }
 
 class DummyController1 extends AbstractController {}
@@ -36,8 +37,8 @@ class DummyController2 extends AbstractController {}
 
 function createMiddleware(
   name: string,
-  after: () => typeof AbstractMiddleware[] = () => [],
-  before: () => typeof AbstractMiddleware[] = () => [],
+  after: () => (typeof AbstractMiddleware)[] = () => [],
+  before: () => (typeof AbstractMiddleware)[] = () => [],
 ) {
   class Middleware extends AbstractMiddleware {
     public name = name;
@@ -101,11 +102,11 @@ describe('webserver/process', () => {
 
     const eventManager = new EventManager();
 
-    const processWriteSpy = jest.spyOn(process.stdout, 'write');
+    const processWriteSpy = vi.spyOn(process.stdout, 'write');
 
-    const adapterServerInitializedEventHandler = jest.fn();
-    const adapterServerStartedEventHandler = jest.fn();
-    const adapterServerStoppedEventHandler = jest.fn();
+    const adapterServerInitializedEventHandler = vi.fn();
+    const adapterServerStartedEventHandler = vi.fn();
+    const adapterServerStoppedEventHandler = vi.fn();
 
     eventManager.on(ADAPTER_EVENTS.SERVER_INITIALIZED, adapterServerInitializedEventHandler);
     eventManager.on(ADAPTER_EVENTS.SERVER_STARTED, adapterServerStartedEventHandler);
@@ -129,12 +130,14 @@ describe('webserver/process', () => {
     });
 
     describe('#configure', () => {
-      const commandBuilder = CommandBuilder.create();
-      webProcess.configure(commandBuilder);
+      it('should expect the port argument', () => {
+        const commandBuilder = CommandBuilder.create();
+        webProcess.configure(commandBuilder);
 
-      expect(commandBuilder.getArguments()).toEqual([
-        { name: 'port', type: 'number', describe: "Server's port", default: 4242 },
-      ]);
+        expect(commandBuilder.getArguments()).toEqual([
+          { name: 'port', type: 'number', describe: "Server's port", default: 4242 },
+        ]);
+      });
     });
 
     describe('#execute', () => {

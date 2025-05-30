@@ -1,15 +1,16 @@
 /* eslint-disable max-classes-per-file */
 import { NextFunction, Request as NativeRequest, Response as NativeResponse } from 'express';
 import { REQUEST_PHASE, AbstractMiddleware, Context } from '@alliage/webserver';
+import { describe, it, expect, vi } from 'vitest';
 
-import { Request } from '../../network/request';
-import { Response } from '../../network/response';
-import { createNativeMiddleware } from '../native-middleware';
+import { Request } from '../../network/request.js';
+import { Response } from '../../network/response.js';
+import { createNativeMiddleware } from '../native-middleware.js';
 
 describe('webserver-express/middleware/native-middleware', () => {
   describe('#createNativeMiddleware', () => {
     describe('simple use case', () => {
-      const dummyMiddleware = jest.fn();
+      const dummyMiddleware = vi.fn();
       const NativeMiddleware = createNativeMiddleware(dummyMiddleware);
 
       let middleware: AbstractMiddleware;
@@ -70,14 +71,14 @@ describe('webserver-express/middleware/native-middleware', () => {
           // empty
         }
       }
-      const dummyMiddleware = jest.fn();
-      const dummyMiddlewareCreator = jest
+      const dummyMiddleware = vi.fn();
+      const dummyMiddlewareCreator = vi
         .fn()
         .mockReturnValue(
           (err: Error, req: NativeRequest, res: NativeResponse, next: NextFunction) =>
             dummyMiddleware(err, req, res, next),
         );
-      const argsBuilder = jest.fn().mockReturnValue(['arg1', 'arg2']);
+      const argsBuilder = vi.fn().mockReturnValue(['arg1', 'arg2']);
       const NativeMiddleware = createNativeMiddleware(dummyMiddlewareCreator, {
         args: argsBuilder,
         requestPhase: REQUEST_PHASE.POST_CONTROLLER,

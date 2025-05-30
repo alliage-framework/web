@@ -12,28 +12,22 @@ export class Response<B = string | Buffer | object> extends AbstractResponse<B, 
   constructor(private nativeResponse: NativeResponse) {
     super();
     const originalStatus = nativeResponse.status;
-     
+
     nativeResponse.status = (code: number) => {
       this.status = code;
       return originalStatus.call(nativeResponse, code);
     };
 
     const originalRedirect = nativeResponse.redirect;
-     
-    nativeResponse.redirect = (arg1: any, arg2?: any) => {
-      const result = originalRedirect.call(nativeResponse, arg1, arg2);
-      if (typeof arg1 === 'number') {
-        this.status = arg1;
-      } else if (typeof arg2 === 'number') {
-        this.status = arg2;
-      } else {
-        this.status = 302;
-      }
+
+    nativeResponse.redirect = (arg1: string | number, arg2?: string) => {
+      const result = originalRedirect.call(nativeResponse, arg1 as number, arg2 as string);
+      this.status = typeof arg1 === 'number' ? arg1 : 302;
       return result;
     };
 
     const originalWriteHeaders = nativeResponse.writeHead;
-     
+
     nativeResponse.writeHead = (code: number, ...args: any[]) => {
       this.status = code;
       return originalWriteHeaders.call(nativeResponse, code, ...args);

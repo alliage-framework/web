@@ -1,6 +1,7 @@
-import { AbstractRequest } from '../../network/request';
-import { AbstractResponse } from '../../network/response';
-import { Context } from '../context';
+import { describe, it, expect } from 'vitest';
+import { AbstractRequest } from '../../network/request.js';
+import { AbstractResponse } from '../../network/response.js';
+import { Context } from '../context.js';
 
 describe('webserver/middleware/context', () => {
   describe('Context', () => {

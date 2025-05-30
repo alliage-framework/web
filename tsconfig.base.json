@@ -2,9 +2,9 @@
     "compilerOptions": {
         /* Basic Options */
         "target": "ESNext",
-        "module": "ESNext",
+        "module": "NodeNext",
         "lib": [
-            "es2021"
+            "ESNext"
         ],
         "sourceMap": true,
         "declaration": true,
@@ -22,10 +22,9 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         /* Module Resolution Options */
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "esModuleInterop": true,
         /* Advanced Options */
         "resolveJsonModule": true,
-        "experimentalDecorators": true,
     }
 }

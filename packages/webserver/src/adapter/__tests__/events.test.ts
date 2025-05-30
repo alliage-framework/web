@@ -1,8 +1,9 @@
-import http from 'http';
+import { describe, it, expect } from 'vitest';
+import * as http from 'http';
 
-import { AbstractController, RouteHandler } from '../../controller';
-import { AbstractRequest } from '../../network/request';
-import { AbstractResponse } from '../../network/response';
+import { AbstractController, RouteHandler } from '../../controller/index.js';
+import { AbstractRequest } from '../../network/request.js';
+import { AbstractResponse } from '../../network/response.js';
 import {
   AdapterNotFoundEvent,
   AdapterPostControllerEvent,
@@ -13,11 +14,11 @@ import {
   AdapterServerStartedEvent,
   AdapterServerStoppedEvent,
   ADAPTER_EVENTS,
-} from '../events';
+} from '../events.js';
 
 describe('webserver/adapter/events', () => {
-  const dummyRequest = ({} as unknown) as AbstractRequest;
-  const dummyResponse = ({} as unknown) as AbstractResponse;
+  const dummyRequest = {} as AbstractRequest;
+  const dummyResponse = {} as AbstractResponse;
 
   describe('AdapterPreRequestEvent', () => {
     const event = new AdapterPreRequestEvent(dummyRequest, dummyResponse, 'dummy-adapter');
@@ -104,7 +105,7 @@ describe('webserver/adapter/events', () => {
   });
 
   describe('AdapterPreControllerEvent', () => {
-    const dummyController = ({} as unknown) as AbstractController;
+    const dummyController = {} as AbstractController;
     const dummyHandler = (() => undefined) as RouteHandler;
     const event = new AdapterPreControllerEvent(
       dummyController,
@@ -165,7 +166,7 @@ describe('webserver/adapter/events', () => {
   });
 
   describe('AdapterPostControllerEvent', () => {
-    const dummyController = ({} as unknown) as AbstractController;
+    const dummyController = {} as AbstractController;
     const dummyHandler = (() => undefined) as RouteHandler;
     const event = new AdapterPostControllerEvent(
       dummyController,

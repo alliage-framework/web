@@ -3,7 +3,6 @@ import { resolve } from 'path';
 
 export default defineConfig({
   test: {
-    globals: true,
     environment: 'node',
     include: ['packages/**/__tests__/**/*.test.{ts,js}'],
     exclude: ['node_modules', 'dist', 'integration-tests'],

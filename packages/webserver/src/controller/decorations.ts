@@ -1,14 +1,22 @@
 import { HTTP_METHOD } from '../network/index.js';
 
-import { AbstractController } from './index.js';
+import { AbstractController, RouteHandler } from './abstract-controller.js';
 
-const createRouteAnnotation = (method: HTTP_METHOD) => (path: string) => (
-  controller: AbstractController,
-  handlerName: string,
-) => {
+const createRouteAnnotation =
+  (method: HTTP_METHOD) =>
+  (path: string) =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  controller.addRoute(method, path, (controller as any)[handlerName]);
-};
+  (originalMethod: (...args: any[]) => any, context: ClassMethodDecoratorContext) => {
+    context.addInitializer(function () {
+      (this as AbstractController).addRoute(
+        method,
+        path,
+        (this as AbstractController)[context.name as keyof typeof this] as RouteHandler,
+      );
+    });
+
+    return originalMethod;
+  };
 
 export const Get = createRouteAnnotation(HTTP_METHOD.GET);
 export const Post = createRouteAnnotation(HTTP_METHOD.POST);

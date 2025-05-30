@@ -52,8 +52,7 @@ export function createNativeMiddleware<T extends Func>(
           : (context) => applyMiddleware(context);
     }
 
-    /* istanbul ignore next */
-     
+     /* v8 ignore next */
     async apply(_context: Context, _err?: Error) {}
   };
 }

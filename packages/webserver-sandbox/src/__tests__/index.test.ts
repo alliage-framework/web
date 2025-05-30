@@ -1,13 +1,16 @@
+import { describe, it, expect } from 'vitest';
 import { EventEmitter } from 'events';
 
-import nock from 'nock';
+import { vi } from 'vitest';
 import { Sandbox } from '@alliage/sandbox';
+import nock from 'nock';
 
-import { TimeoutExceededError, WebserverSandbox } from '..';
+import { TimeoutExceededError, WebserverSandbox } from '../index.js';
+
 
 function createSandbox() {
   const dummySandbox = {
-    run: jest.fn(),
+    run: vi.fn(),
   };
   const webserverSandbox = WebserverSandbox.create((dummySandbox as unknown) as Sandbox);
 
@@ -19,7 +22,7 @@ function startSandbox(options?: Parameters<WebserverSandbox['start']>[0]) {
   const dummyProcess = Object.assign(new EventEmitter(), {
     stdout: new EventEmitter(),
     stderr: new EventEmitter(),
-    kill: jest.fn(),
+    kill: vi.fn(),
   });
   dummySandbox.run.mockReturnValueOnce({
     process: dummyProcess,
