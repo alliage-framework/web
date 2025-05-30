@@ -14,8 +14,7 @@
     "test:unit": "NODE_ENV=test vitest run --coverage",
     "test:integration": "NODE_ENV=test vitest run --config ./integration-tests/vitest.config.ts",
     "test": "yarn lint && yarn test:unit && yarn test:integration",
-    "release": "npx lerna version --conventional-commits --yes",
-    "publish": "npx lerna publish from-package --yes",
+    "release": "nx release",
     "prepare": "husky"
   },
   "devDependencies": {
