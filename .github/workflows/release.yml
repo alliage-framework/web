@@ -6,7 +6,6 @@ on:
       - beta
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build-and-test:
     uses: ./.github/workflows/build-and-test.yml
@@ -19,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
@@ -33,11 +32,20 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
           echo "registry=https://registry.npmjs.org/" >> .npmrc
           echo "always-auth=true" >> .npmrc
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_SECRET_KEY }}
+      - name: Authenticate and configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}
       - name: Release
         run: |
           yarn prepare
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"
           if [ "${{ github.ref }}" = "refs/heads/beta" ]
           then
             echo "Beta release:"
