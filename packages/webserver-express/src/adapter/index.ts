@@ -41,6 +41,8 @@ export class ExpressAdapter extends AbstractAdapter {
 
   private server?: Server | SecureServer = undefined;
 
+  private serverStarted = false;
+
   private requests = new Map<NativeRequest, Request>();
 
   private responses = new Map<NativeResponse, Response>();
@@ -168,6 +170,7 @@ export class ExpressAdapter extends AbstractAdapter {
     return new Promise<void>((resolve, reject) => {
       server.on('error', (error) => reject(error));
       server.listen(port, host, async () => {
+        this.serverStarted = true;
         resolve();
       });
     });
@@ -175,7 +178,7 @@ export class ExpressAdapter extends AbstractAdapter {
 
   stop() {
     return new Promise<void>((resolve, reject) => {
-      if (!this.server) {
+      if (!this.server || !this.serverStarted) {
         resolve();
         return;
       }

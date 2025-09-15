@@ -4,12 +4,7 @@ import { Duplex } from 'stream';
 import { Request as NativeRequest } from 'express';
 import { AbstractRequest, HTTP_METHOD, Params } from '@alliage/webserver';
 
-export class Request<P = Params, Q = Params, B = any> extends AbstractRequest<
-  P,
-  Q,
-  B,
-  NativeRequest
-> {
+export class Request<P = Params, Q = Params, B = any> extends AbstractRequest<P, Q, B> {
   private extraPayload: Record<string, unknown> = {};
 
   constructor(private nativeRequest: NativeRequest) {
@@ -58,7 +53,7 @@ export class Request<P = Params, Q = Params, B = any> extends AbstractRequest<
   }
 
   getParams() {
-    return (this.nativeRequest.params as unknown) as P;
+    return this.nativeRequest.params as unknown as P;
   }
 
   getPath() {
@@ -70,7 +65,7 @@ export class Request<P = Params, Q = Params, B = any> extends AbstractRequest<
   }
 
   getQuery() {
-    return (this.nativeRequest.query as unknown) as Q;
+    return this.nativeRequest.query as unknown as Q;
   }
 
   isSecure() {
@@ -111,6 +106,10 @@ export class Request<P = Params, Q = Params, B = any> extends AbstractRequest<
 
   getHeader(name: string) {
     return this.nativeRequest.header(name);
+  }
+
+  getHeaders() {
+    return this.nativeRequest.headers;
   }
 
   is(type: string | string[]) {

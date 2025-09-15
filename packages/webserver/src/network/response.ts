@@ -1,5 +1,6 @@
  
 import { Writable, Duplex } from 'stream';
+import { OutgoingMessage } from 'http';
 
 import { ParamsValue } from './http.js';
 
@@ -23,7 +24,7 @@ export class BodyAlreadySetError extends Error {
   }
 }
 
-export abstract class AbstractResponse<B = string | Buffer | object, N = any> {
+export abstract class AbstractResponse<B = string | Buffer | object> {
   // Express response
   abstract headersAreSent(): boolean;
 
@@ -74,5 +75,5 @@ export abstract class AbstractResponse<B = string | Buffer | object, N = any> {
 
   abstract flushHeaders(): this;
 
-  abstract getNativeResponse(): N;
+  abstract getNativeResponse(): OutgoingMessage;
 }
