@@ -1,6 +1,6 @@
 {
   "name": "@alliage/webserver-sandbox",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "Webserver sandbox for Alliage",
   "type": "module",
   "publishConfig": {
@@ -30,7 +30,7 @@
   "peerDependencies": {
     "@alliage/framework": "^1.0.0-beta.3",
     "@alliage/sandbox": "^1.0.0-beta.4",
-    "@alliage/webserver": "^0.1.0-beta.1"
+    "@alliage/webserver": "0.1.0-beta.2"
   },
   "dependencies": {
     "axios": "^1.9.0",
