@@ -2,7 +2,7 @@
 import { Response as NativeResponse, CookieOptions } from 'express';
 import { ParamsValue, AbstractResponse, BodyAlreadySetError } from '@alliage/webserver';
 
-export class Response<B = string | Buffer | object> extends AbstractResponse<B, NativeResponse> {
+export class Response<B = string | Buffer | object> extends AbstractResponse<B> {
   private responseIsClosed = false;
 
   private body: B | undefined;

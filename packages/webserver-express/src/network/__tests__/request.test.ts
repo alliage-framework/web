@@ -39,6 +39,10 @@ describe('webserver-express/http/request', () => {
       acceptsEncodings: vi.fn(),
       acceptsLanguages: vi.fn(),
       header: vi.fn(),
+      headers: {
+        DUMMY_HEADER1: 'DUMMY_HEADER_VALUE1',
+        DUMMY_HEADER2: 'DUMMY_HEADER_VALUE2',
+      },
       is: vi.fn(),
       aborted: false,
       complete: true,
@@ -218,6 +222,15 @@ describe('webserver-express/http/request', () => {
 
         expect(request.getHeader('content-type')).toEqual('application/json');
         expect(dummyRequest.header).toHaveBeenCalledWith('content-type');
+      });
+    });
+
+    describe('#getHeaders', () => {
+      it('should return all headers', () => {
+        expect(request.getHeaders()).toEqual({
+          DUMMY_HEADER1: 'DUMMY_HEADER_VALUE1',
+          DUMMY_HEADER2: 'DUMMY_HEADER_VALUE2',
+        });
       });
     });
 

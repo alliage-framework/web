@@ -1,10 +1,11 @@
 import { Duplex, Readable } from 'stream';
+import { IncomingHttpHeaders, IncomingMessage } from 'http';
 
 import { HTTP_METHOD, Params } from './http.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> {
+export abstract class AbstractRequest<P = Params, Q = Params, B = any> {
   // Express Request
   abstract getBaseUrl(): string;
 
@@ -62,6 +63,8 @@ export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> 
 
   abstract getHeader(name: string): string | undefined;
 
+  abstract getHeaders(): IncomingHttpHeaders;
+
   abstract is(type: string | string[]): string | false | null;
 
   // Http.IncomingMessage
@@ -90,5 +93,5 @@ export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> 
 
   abstract setExtraPayload<T>(name: string, value: T): this;
 
-  abstract getNativeRequest(): N;
+  abstract getNativeRequest(): IncomingMessage;
 }
